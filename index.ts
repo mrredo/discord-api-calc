@@ -11,51 +11,58 @@ app.set('json spaces', 2)
 app.listen(8080, () => {
     console.log("API started!")
 })
+const permflags: any = {
+    "0x1": "CREATE_INSTANT_INVITE",
+    "0x2": "KICK_MEMBERS",
+    "0x4": "BAN_MEMBERS",
+    "0x8": "ADMINISTRATOR",
+    "0x10": "MANAGE_CHANNELS",
+    "0x20": "MANAGE_GUILD",
+    "0x40": "ADD_REACTIONS",
+    "0x80": "VIEW_AUDIT_LOG",
+    "0x100": "PRIORITY_SPEAKER",
+    "0x200": "STREAM",
+    "0x400": "VIEW_CHANNEL",
+    "0x800": "SEND_MESSAGES",
+    "0x1000": "SEND_TTS_MESSAGES",
+    "0x2000": "MANAGE_MESSAGES",
+    "0x4000": "EMBED_LINKS",
+    "0x8000": "ATTACH_FILES",
+    "0x10000": "READ_MESSAGE_HISTORY",
+    "0x20000": "MENTION_EVERYONE",
+    "0x40000": "USE_EXTERNAL_EMOJIS",
+    "0x80000": "VIEW_GUILD_INSIGHTS",
+    "0x100000": "CONNECT",
+    "0x200000": "SPEAK",
+    "0x400000": "MUTE_MEMBERS",
+    "0x800000": "DEAFEN_MEMBERS",
+    "0x1000000": "MOVE_MEMBERS",
+    "0x2000000": "USE_VAD",
+    "0x4000000": "CHANGE_NICKNAME",
+    "0x8000000": "MANAGE_NICKNAMES",
+    "0x10000000": "MANAGE_ROLES",
+    "0x20000000": "MANAGE_WEBHOOKS",
+    "0x40000000": "MANAGE_EMOJIS_AND_STICKERS",
+    "0x80000000": "USE_APPLICATION_COMMANDS",
+    "0x100000000": "REQUEST_TO_SPEAK",
+    "0x200000000": "MANAGE_EVENTS",
+    "0x400000000": "MANAGE_THREADS ",
+    "0x800000000": "CREATE_PUBLIC_THREADS",
+    "0x1000000000": "CREATE_PRIVATE_THREADS",
+    "0x2000000000": "USE_EXTERNAL_STICKERS",
+    "0x4000000000": "SEND_MESSAGES_IN_THREADS",
+    "0x8000000000": "START_EMBEDDED_ACTIVITIES",
+    "0x10000000000": "MODERATE_MEMBERS"
+}
+
+
 function permissionArray(number: number) {
     let arr = []
-    if(number & 0x1) arr.push("CREATE_INSTANT_INVITE")
-    if(number & 0x2) arr.push("KICK_MEMBERS")
-    if(number & 0x4) arr.push("BAN_MEMBERS")
-    if(number & 0x8) arr.push("ADMINISTRATOR")
-    if(number & 0x10) arr.push("MANAGE_CHANNELS")
-    if(number & 0x20) arr.push("MANAGE_GUILD")
-    if(number & 0x40) arr.push("ADD_REACTIONS")
-    if(number & 0x80) arr.push("VIEW_AUDIT_LOG")
-    if(number & 0x100) arr.push("PRIORITY_SPEAKER")
-    if(number & 0x200) arr.push("STREAM")
-    if(number & 0x400) arr.push("VIEW_CHANNEL")
-    if(number & 0x800) arr.push("SEND_MESSAGES")
-    if(number & 0x1000) arr.push("SEND_TTS_MESSAGES")
-    if(number & 0x2000) arr.push("MANAGE_MESSAGES")
-    if(number & 0x4000) arr.push("EMBED_LINKS")
-    if(number & 0x8000) arr.push("ATTACH_FILES")
-    if(number & 0x10000) arr.push("READ_MESSAGE_HISTORY")
-    if(number & 0x20000) arr.push("MENTION_EVERYONE")
-    if(number & 0x40000) arr.push("USE_EXTERNAL_EMOJIS")
-    if(number & 0x80000) arr.push("VIEW_GUILD_INSIGHTS")
-    if(number & 0x100000) arr.push("CONNECT")
-    if(number & 0x200000) arr.push("SPEAK")
-    if(number & 0x400000) arr.push("MUTE_MEMBERS")
-    if(number & 0x800000) arr.push("DEAFEN_MEMBERS")
-    if(number & 0x1000000) arr.push("MOVE_MEMBERS")
-    if(number & 0x2000000) arr.push("USE_VAD")
-    if(number & 0x4000000) arr.push("CHANGE_NICKNAME")
-    if(number & 0x8000000) arr.push("MANAGE_NICKNAMES")
-    if(number & 0x10000000) arr.push("MANAGE_ROLES")
-    if(number & 0x20000000) arr.push("MANAGE_WEBHOOKS")
-    if(number & 0x40000000) arr.push("MANAGE_EMOJIS_AND_STICKERS")
-    if(number & 0x80000000) arr.push("USE_APPLICATION_COMMANDS")
-    if(number & 0x100000000) arr.push("REQUEST_TO_SPEAK")
-    if(number & 0x200000000) arr.push("MANAGE_EVENTS")
-    if(number & 0x400000000) arr.push("MANAGE_THREADS")
-    if(number & 0x800000000) arr.push("CREATE_PUBLIC_THREADS")
-    if(number & 0x1000000000) arr.push("CREATE_PRIVATE_THREADS")
-    if(number & 0x2000000000) arr.push("USE_EXTERNAL_STICKERS")
-    if(number & 0x4000000000) arr.push("SEND_MESSAGES_IN_THREADS")
-    if(number & 0x8000000000) arr.push("START_EMBEDDED_ACTIVITIES")
-    if(number & 0x10000000000) arr.push("MODERATE_MEMBERS")
-    return arr
+    for(const key in permflags) {
+        if(number & Number(key)) arr.push(permflags[key])
     }
+    return arr
+}
 app.get("/", (req: Request, res: Response) => {
     res.send("go to '/api/pdata/{permission.number}' for perm to array")
 })
